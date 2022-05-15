@@ -62,12 +62,6 @@ class User extends Authenticatable
         return $this->role_id === 3;
     }
 
-    public function isSuperadminOrAdmin(): bool
-    {
-        return ($this->isSuperadmin() || $this->isAdmin());
-        // return in_array($this->role, ['superadmin', 'admin']);
-    }
-
     public function role()
     {
         // return $this->hasOne(Role::class, 'id', 'role_id');
