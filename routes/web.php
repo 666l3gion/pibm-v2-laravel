@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::middleware('auth')->group(function () {
+    Route::prefix('/')->name('dashboard.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+        // Route::middleware(['role:superadmin,admin,editor'])->group(function () {
+        //     Route::resource('/articles', ArticleController::class)->except(['index', 'show']);
+        // });
+        // Route::middleware(['role:superadmin,admin'])->group(function () {
+        // });
+        // Route::middleware('role:superadmin')->group(function () {
+        // });
+    });
+
+    Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
+    Route::post('/login', [AuthController::class, 'authenticate']);
 });
