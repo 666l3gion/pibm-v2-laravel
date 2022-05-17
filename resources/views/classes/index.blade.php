@@ -18,7 +18,7 @@
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
-                    <a href="{{ route('master.teachers.create') }}" class="btn btn-primary">
+                    <a href="{{ route('master.classes.create') }}" class="btn btn-primary">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -27,7 +27,7 @@
                             <line x1="12" y1="5" x2="12" y2="19" />
                             <line x1="5" y1="12" x2="19" y2="12" />
                         </svg>
-                        Tambah Data Guru
+                        Tambah Data Kelas
                     </a>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                         <h3 class="card-title">Daftar {{ $title }}</h3>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
-                        <x-filters.sort route="master.teachers.index" :sorts="
+                        <x-filters.sort route="master.classes.index" :sorts="
                         [
                             [
                                 'sort' => 'created_at',
@@ -55,22 +55,12 @@
                                 'text' => 'Terlama'
                             ],
                             [
-                                'sort' => 'nip',
-                                'direction' => 'asc',
-                                'text' => 'NIP'
-                            ],
-                            [
                                 'sort' => 'name',
                                 'direction' => 'asc',
                                 'text' => 'Nama'
                             ],
-                            [
-                                'sort' => 'email',
-                                'direction' => 'asc',
-                                'text' => 'Email'
-                            ]
                         ]" />
-                        <x-filters.search route="master.teachers.index" />
+                        <x-filters.search route="master.classes.index" />
                     </div>
                 </div>
 
@@ -79,26 +69,22 @@
                         <thead>
                             <tr>
                                 <th class="w-1">No.</th>
-                                <th>NIP</th>
                                 <th>Nama</th>
-                                <th>Email</th>
+                                <th>Jurusan</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if( $teachers->isNotEmpty() )
-                            @foreach($teachers as $teacher)
+                            @if( $classes->isNotEmpty() )
+                            @foreach($classes as $class)
                             <tr>
-                                <td><span class="text-muted">{{ ($teachers->currentpage()-1) * $teachers->perpage() +
+                                <td><span class="text-muted">{{ ($classes->currentpage()-1) * $classes->perpage() +
                                         $loop->index + 1 }}</span></td>
                                 <td>
-                                    {{ $teacher->nip }}
+                                    {{ $class->name }}
                                 </td>
                                 <td>
-                                    {{ $teacher->name }}
-                                </td>
-                                <td>
-                                    {{ $teacher->email }}
+                                    {{ $class->major?->name }}
                                 </td>
                                 <td class="text-center">
                                     <span class="dropdown">
@@ -106,7 +92,7 @@
                                             data-bs-toggle="dropdown">Aksi</button>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <form
-                                                action="{{ route('master.teachers.destroy', ['teacher' => $teacher->id]) }}"
+                                                action="{{ route('master.classes.destroy', ['class' => $class->id]) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('DELETE')
@@ -117,7 +103,7 @@
                                                 </button>
                                             </form>
                                             <a class="dropdown-item"
-                                                href="{{ route('master.teachers.edit', ['teacher' => $teacher->id]) }}">
+                                                href="{{ route('master.classes.edit', ['class' => $class->id]) }}">
                                                 Edit
                                             </a>
                                         </div>
@@ -128,7 +114,7 @@
                             @else
                             <tr>
                                 <td colspan="8">
-                                    <p class="text-danger py-3 m-0 text-center">Data guru tidak ditemukan.</p>
+                                    <p class="text-danger py-3 m-0 text-center">Data jurusan tidak ditemukan.</p>
                                 </td>
                             </tr>
                             @endif
@@ -137,7 +123,7 @@
                 </div>
 
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    {{ $teachers->onEachSide(5)->links() }}
+                    {{ $classes->onEachSide(5)->links() }}
                 </div>
             </div>
         </div>

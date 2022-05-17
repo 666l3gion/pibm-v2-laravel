@@ -16,12 +16,13 @@
             </div>
         </div>
 
-        <form action="{{ route('master.teachers.update', ['teacher' => $teacher->id]) }}" method="post">
-            @csrf
-            @method('PUT')
+        <div class="row">
+            <div class="col-md-6">
+                <form action="{{ route('master.teachers.update', ['teacher' => $teacher->id]) }}" method="post"
+                    class="form-disable">
+                    @csrf
+                    @method('PUT')
 
-            <div class="row">
-                <div class="col-md-6">
                     <div class="card mb-2">
                         <div class="card-header">
                             <h4 class="card-title">Form {{ $title }}</h4>
@@ -45,9 +46,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 @endsection

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clazsses', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('major_id');
+            $table->foreignId('major_id')->constrained()->restrictOnDelete();
             $table->timestamps();
         });
     }

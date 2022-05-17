@@ -1,3 +1,8 @@
+<div class="progress d-none position-absolute top-0 start-0 end-0" id="progress-bar-app"
+    style="height: 2px !important; z-index: 9999 !important;">
+    <div class="progress-bar progress-bar-indeterminate bg-info"></div>
+</div>
+
 <header class="navbar navbar-expand-md navbar-light d-print-none">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -122,6 +127,10 @@
                             <a class="dropdown-item {{ request()->routeIs('master.majors.*') ? 'active' : '' }}"
                                 href="{{ route('master.majors.index') }}">
                                 Jurusan
+                            </a>
+                            <a class="dropdown-item {{ request()->routeIs('master.classes.*') ? 'active' : '' }}"
+                                href="{{ route('master.classes.index') }}">
+                                kelas
                             </a>
                         </div>
                     </li>

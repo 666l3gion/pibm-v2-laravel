@@ -82,7 +82,7 @@
                                 <td>
                                     {{ $major->name }}
                                 </td>
-                                <td class="text-start">
+                                <td class="text-center">
                                     <span class="dropdown">
                                         <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport"
                                             data-bs-toggle="dropdown">Aksi</button>

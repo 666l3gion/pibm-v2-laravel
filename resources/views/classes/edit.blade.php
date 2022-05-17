@@ -18,7 +18,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <form action="{{ route('master.majors.update', ['major' => $major->id]) }}" method="post"
+                <form action="{{ route('master.classes.update', ['class' => $class->id]) }}" method="post"
                     class="form-disable">
                     @csrf
                     @method('PUT')
@@ -30,14 +30,24 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <x-forms.input :required="true" name="name" label="Nama Jurusan"
-                                        old="{{ old('name', $major->name) }}" />
+                                    <x-forms.input :required="true" name="name" label="Nama Kelas"
+                                        old="{{ old('name', $class->name) }}" />
+                                    <x-forms.select :required="true" name="major_id" label="Jurusan"
+                                        placeholder="Pilih jurusan">
+                                        @foreach ($majors as $major)
+                                        @if( old('major_id', $class->major_id) == $major->id)
+                                        <option selected value="{{ $major->id }}">{{ $major->name }}</option>
+                                        @else
+                                        <option value="{{ $major->id }}">{{ $major->name }}</option>
+                                        @endif
+                                        @endforeach
+                                    </x-forms.select>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-end align-items-center">
                             <div>
-                                <a href="{{ route('master.majors.index') }}" class="btn btn-light">Batal</a>
+                                <a href="{{ route('master.classes.index') }}" class="btn btn-light">Batal</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>

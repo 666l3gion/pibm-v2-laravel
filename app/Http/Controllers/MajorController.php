@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MajorRequests\MajorRequest;
 use App\Models\Major;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class MajorController extends Controller
@@ -87,8 +88,11 @@ class MajorController extends Controller
      */
     public function destroy(Major $major)
     {
-        // TODO: handle onDelete seteleh sampai crud class
-        $major->delete();
-        return redirect()->route('master.majors.index')->with('success', 'Data jurusan berhasil dihapus.');
+        try {
+            $major->delete();
+            return redirect()->route('master.majors.index')->with('success', 'Data jurusan berhasil dihapus.');
+        } catch (QueryException $ex) {
+            return redirect()->route('master.majors.index')->with('failed', 'Data jurusan gagal dihapus dikarenakan ada data lain yang masih menggunakannya.');
+        }
     }
 }
