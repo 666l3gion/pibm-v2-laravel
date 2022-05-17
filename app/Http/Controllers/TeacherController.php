@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequests\StoreTeacherRequest;
+use App\Http\Requests\TeacherRequests\UpdateTeacherRequest;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
@@ -15,12 +15,14 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::query()->filter(request(['search']));
+        $teachers = Teacher::query()->filter(request(['search', 'sort', 'direction']))
+            ->paginate()
+            ->withQueryString();
 
         return view('teachers.index', [
             "pretitle" => "Guru",
             "title" => "Data Guru",
-            "teachers" => $teachers->latest()->withQueryString()
+            "teachers" => $teachers
         ]);
     }
 
@@ -45,7 +47,7 @@ class TeacherController extends Controller
      */
     public function store(StoreTeacherRequest $request)
     {
-        Teacher::create($request->all());
+        Teacher::create($request->validated());
         return redirect()->route("master.teachers.index")->with('success', 'Data guru berhasil ditambahkan.');
     }
 
@@ -71,21 +73,9 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
-        $rules = [
-            'nip' => 'required|numeric|digits:18',
-            'name' => 'required|max:255',
-            'email' => 'required|email',
-        ];
-
-        if ($request->nip !== $teacher->nip)
-            $rules['nip'] .= '|unique:teachers';
-
-        $validatedData = $request->validate($rules);
-
-        $teacher->update($validatedData);
-
+        $teacher->update($request->validated());
         return redirect()->route("master.teachers.index")->with('success', 'Data guru berhasil diubah.');
     }
 

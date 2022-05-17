@@ -4,7 +4,7 @@ namespace App\Http\Requests\TeacherRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTeacherRequest extends FormRequest
+class UpdateTeacherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,20 @@ class StoreTeacherRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'nip' => 'required|numeric|digits:18|unique:teachers',
+        $rules = [
+            'nip' => 'required|numeric|digits:18',
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:teachers',
+            'email' => 'required|email',
         ];
+
+        // $this->route() is route binding to get data teacher
+        $teacher = $this->route('teacher');
+
+        if (request()->nip !== $teacher->nip)
+            $rules['nip'] .= '|unique:teachers';
+        if (request()->email !== $teacher->email)
+            $rules['email'] .= '|unique:teachers';
+
+        return $rules;
     }
 }

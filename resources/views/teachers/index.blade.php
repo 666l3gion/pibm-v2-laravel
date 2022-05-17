@@ -20,9 +20,7 @@
                 <div class="btn-list">
                     <a href="{{ route('master.teachers.create') }}" class="btn btn-primary">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <line x1="12" y1="5" x2="12" y2="19" />
                             <line x1="5" y1="12" x2="19" y2="12" />
@@ -41,23 +39,36 @@
                     <div class="col-md-6 mb-3 mb-md-0">
                         <h3 class="card-title">Daftar {{ $title }}</h3>
                     </div>
-                    <div class="col-md-6">
-                        <div class="text-muted">
-                            <form method="GET" action="{{ route('master.teachers.index') }}" class="input-icon">
-                                <input type="text" value="{{ request('search') }}" class="form-control w-100"
-                                    placeholder="Search…" name="search">
-                                <span class="input-icon-addon">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/search -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <circle cx="10" cy="10" r="7" />
-                                        <line x1="21" y1="21" x2="15" y2="15" />
-                                    </svg>
-                                </span>
-                            </form>
-                        </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <x-filters.sort route="master.teachers.index" :sorts="
+                        [
+                            [
+                                'sort' => 'created_at',
+                                'direction' => 'desc',
+                                'text' => 'Terbaru'
+                            ],
+                            [
+                                'sort' => 'created_at',
+                                'direction' => 'asc',
+                                'text' => 'Terlama'
+                            ],
+                            [
+                                'sort' => 'nip',
+                                'direction' => 'asc',
+                                'text' => 'NIP'
+                            ],
+                            [
+                                'sort' => 'name',
+                                'direction' => 'asc',
+                                'text' => 'Nama'
+                            ],
+                            [
+                                'sort' => 'email',
+                                'direction' => 'asc',
+                                'text' => 'Email'
+                            ]
+                        ]" />
+                        <x-filters.search route="master.teachers.index" />
                     </div>
                 </div>
 
@@ -89,22 +100,16 @@
                                 </td>
                                 <td class="text-start">
                                     <span class="dropdown">
-                                        <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport"
-                                            data-bs-toggle="dropdown">Aksi</button>
+                                        <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Aksi</button>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <form
-                                                action="{{ route('master.teachers.destroy', ['teacher' => $teacher->id]) }}"
-                                                method="post">
+                                            <form action="{{ route('master.teachers.destroy', ['teacher' => $teacher->id]) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
-                                                    class="dropdown-item btn-danger">
+                                                <button type="submit" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="dropdown-item btn-danger">
                                                     Hapus
                                                 </button>
                                             </form>
-                                            <a class="dropdown-item"
-                                                href="{{ route('master.teachers.edit', ['teacher' => $teacher->id]) }}">
+                                            <a class="dropdown-item" href="{{ route('master.teachers.edit', ['teacher' => $teacher->id]) }}">
                                                 Edit
                                             </a>
                                         </div>
