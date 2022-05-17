@@ -114,7 +114,7 @@
                             @else
                             <tr>
                                 <td colspan="8">
-                                    <p class="text-danger py-3 m-0 text-center">Data jurusan tidak ditemukan.</p>
+                                    <p class="text-danger py-3 m-0 text-center">Data kelas tidak ditemukan.</p>
                                 </td>
                             </tr>
                             @endif

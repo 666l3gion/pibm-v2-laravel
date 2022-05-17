@@ -54,7 +54,7 @@
                     </span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ auth()->user()->name }}</div>
-                        <div class="mt-1 small fw-bold text-success">{{ Str::ucfirst(auth()->user()->role->name) }}
+                        <div class="mt-1 small fw-bold text-success">{{ Str::ucfirst(auth()->user()->role) }}
                         </div>
                     </div>
                 </a>
@@ -130,7 +130,11 @@
                             </a>
                             <a class="dropdown-item {{ request()->routeIs('master.classes.*') ? 'active' : '' }}"
                                 href="{{ route('master.classes.index') }}">
-                                kelas
+                                Kelas
+                            </a>
+                            <a class="dropdown-item {{ request()->routeIs('master.subjects.*') ? 'active' : '' }}"
+                                href="{{ route('master.subjects.index') }}">
+                                Mata Pelajaran
                             </a>
                         </div>
                     </li>

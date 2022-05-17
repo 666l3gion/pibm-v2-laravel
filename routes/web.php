@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,11 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('/master')->name('master.')->group(function () {
         Route::resource('/teachers', TeacherController::class)->except('show');
+        Route::post('/teachers/active/{teacher}', [TeacherController::class, 'active'])->name('teachers.active');
+
         Route::resource('/majors', MajorController::class)->except('show');
         Route::resource('/classes', ClassController::class)->except('show');
+        Route::resource('/subjects', SubjectController::class)->except('show');
     });
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');

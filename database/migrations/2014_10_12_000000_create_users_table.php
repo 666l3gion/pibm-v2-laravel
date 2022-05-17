@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique(); // ada kemungkinan email unique akan jadi masalah
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('role_id');
+            $table->enum('role', ['superadmin', 'admin', 'guru', 'siswa']);
             $table->rememberToken();
             $table->timestamps();
         });

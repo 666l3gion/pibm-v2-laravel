@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subject>
  */
-class StudentFactory extends Factory
+class SubjectFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->paragraph
+            'name' => $this->faker->paragraph(2)
         ];
     }
 }

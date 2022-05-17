@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequests\StoreTeacherRequest;
 use App\Http\Requests\TeacherRequests\UpdateTeacherRequest;
+use App\Models\Role;
 use App\Models\Teacher;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -90,5 +93,31 @@ class TeacherController extends Controller
         // TODO: handle onDelete
         $teacher->delete();
         return redirect()->route('master.teachers.index')->with('success', 'Data guru berhasil dihapus.');
+    }
+
+    /**
+     * Add data teacher to users
+     */
+    public function active(Teacher $teacher)
+    {
+        // is teacher already actived/registered
+        $isActive = $teacher->user_id; // user_id or null
+
+        if ($isActive) { // jika sudah aktif (maka hapus)
+            User::find($teacher->user_id)->delete();
+            $teacher->user_id = null;
+            $teacher->save();
+            return redirect()->route('master.teachers.index')->with('success', "Data guru berhasil di hapus dari data user");
+        }
+
+        $user = User::create([
+            "name" => $teacher->name,
+            "role" => User::$GURU_ROLE, // set role as guru/teacher
+            "password" => Hash::make($teacher->nip),
+            "email" => $teacher->email,
+        ]);
+        $teacher->user_id = $user->id;
+        $teacher->save();
+        return redirect()->route('master.teachers.index')->with('success', "Data guru berhasil diaktifkan dengan email = '$teacher->email' dan password '$teacher->nip' (NIP).");
     }
 }

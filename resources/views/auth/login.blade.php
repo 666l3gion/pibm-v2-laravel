@@ -4,8 +4,7 @@
 <div class="page page-center">
     <div class="container-tight py-4">
         <div class="text-center mb-2">
-            <a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('images/logo.png') }}"
-                    alt="SMK Logo" height="150"></a>
+            <a href="." class="navbar-brand"><img src="{{ asset('images/logo.png') }}" alt="SMK Logo" height="150"></a>
         </div>
 
         @include('partials.alert')

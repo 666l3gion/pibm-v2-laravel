@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'role_id',
+        'role',
         'username',
         'password',
     ];
@@ -35,6 +35,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    static string $SUPERADMIN_ROLE = 'superadmin';
+    static string $ADMIN_ROLE = 'admin';
+    static string $GURU_ROLE = 'guru';
+    static string $SISWA_ROLE = 'siswa';
+
     /**
      * The attributes that should be cast.
      *
@@ -47,24 +52,24 @@ class User extends Authenticatable
     public function isSuperadmin()
     {
         // return $this->role()->name === 'superadmin';
-        return $this->role_id === 1;
+        return $this->role === self::$SUPERADMIN_ROLE;
+    }
+
+    public function isSuperadminOrAdmin()
+    {
+        // return $this->role()->name === 'superadmin';
+        return $this->role === self::$SUPERADMIN_ROLE || $this->role === self::$ADMIN_ROLE;
     }
 
     public function isTeacher()
     {
         // return $this->role()->name === 'guru';
-        return $this->role_id === 2;
+        return $this->role === self::$GURU_ROLE;
     }
 
     public function isStudent()
     {
         // return $this->role()->name === 'siswa';
-        return $this->role_id === 3;
-    }
-
-    public function role()
-    {
-        // return $this->hasOne(Role::class, 'id', 'role_id');
-        return $this->belongsTo(Role::class);
+        return $this->role === self::$SISWA_ROLE;
     }
 }
