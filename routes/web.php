@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('/master')->name('master.')->group(function () {
         Route::resource('/teachers', TeacherController::class)->except('show');
+        Route::resource('/majors', MajorController::class)->except('show');
     });
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');

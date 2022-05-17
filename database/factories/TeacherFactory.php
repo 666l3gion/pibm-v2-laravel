@@ -17,7 +17,9 @@ class TeacherFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "nip" => $this->faker->bothify('##################'),
+            "name" => $this->faker->name(),
+            "email" => $this->faker->safeEmail()
         ];
     }
 }

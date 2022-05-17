@@ -119,9 +119,12 @@
                                 href="{{ route('master.teachers.index') }}">
                                 Guru
                             </a>
+                            <a class="dropdown-item {{ request()->routeIs('master.majors.*') ? 'active' : '' }}"
+                                href="{{ route('master.majors.index') }}">
+                                Jurusan
+                            </a>
                         </div>
                     </li>
-
                 </ul>
             </div>
         </div>

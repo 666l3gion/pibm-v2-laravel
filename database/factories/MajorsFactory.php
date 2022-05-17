@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Guru>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Majors>
  */
-class GuruFactory extends Factory
+class MajorsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class GuruFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "name" => $this->faker->streetName,
         ];
     }
 }
