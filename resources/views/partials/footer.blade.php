@@ -1,4 +1,4 @@
-<footer class="footer footer-transparent d-print-none">
+<footer class="footer footer-transparent d-print-none p-2">
     <div class="container-xl mt-5">
         <div class="row text-center">
             <p>
