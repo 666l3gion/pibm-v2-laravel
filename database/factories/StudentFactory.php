@@ -16,8 +16,12 @@ class StudentFactory extends Factory
      */
     public function definition()
     {
+        $uniqueNumber = $this->faker->numerify('##########');
         return [
-            'name' => $this->faker->paragraph
+            'name' => $this->faker->name(),
+            'nis' => $uniqueNumber,
+            'email' => $uniqueNumber . '@gmail.com',
+            'gender' => collect(['L', 'P'])->random()
         ];
     }
 }

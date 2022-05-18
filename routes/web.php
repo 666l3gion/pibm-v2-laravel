@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/majors', MajorController::class)->except('show');
         Route::resource('/classes', ClassController::class)->except('show');
         Route::resource('/subjects', SubjectController::class)->except('show');
+        Route::resource('/students', StudentController::class)->except('show');
     });
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');

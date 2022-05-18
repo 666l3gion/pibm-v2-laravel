@@ -136,6 +136,10 @@
                                 href="{{ route('master.subjects.index') }}">
                                 Mata Pelajaran
                             </a>
+                            <a class="dropdown-item {{ request()->routeIs('master.students.*') ? 'active' : '' }}"
+                                href="{{ route('master.students.index') }}">
+                                Siswa
+                            </a>
                         </div>
                     </li>
                 </ul>

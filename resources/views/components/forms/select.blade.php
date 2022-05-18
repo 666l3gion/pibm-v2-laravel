@@ -13,6 +13,9 @@
 
 @pushOnce('scripts')
 <script src="{{ asset('tabler/dist/libs/tom-select/dist/js/tom-select.base.min.js') }}"></script>
+@endPushOnce
+
+@push('scripts')
 <script>
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function() {
@@ -40,4 +43,4 @@
     });
     // @formatter:on
 </script>
-@endPushOnce
+@endpush

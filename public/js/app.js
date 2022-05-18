@@ -19,13 +19,16 @@ const forms = document.querySelectorAll(".form-disable");
 forms?.forEach((form) => {
     form.addEventListener("submit", function (e) {
         document.getElementById("progress-bar-app").classList.remove("d-none");
-        this.classList.add("position-relative");
-        const element = document.createElement("div");
-        element.className =
-            "position-absolute start-0 end-0 top-0 bottom-0 d-flex align-items-center justify-content-center";
-        element.innerHTML = `<small>Tunggu...</small>`;
-        element.style.backgroundColor = "rgba(255,255,255,.6)";
-        element.style.zIndex = 100;
-        this.appendChild(element);
+        // this.classList.add("position-relative");
+        // const element = document.createElement("div");
+        // element.className =
+        //     "position-absolute start-0 end-0 top-0 bottom-0 d-flex align-items-center justify-content-center";
+        // element.innerHTML = `<small>Tunggu...</small>`;
+        // element.style.backgroundColor = "rgba(255,255,255,.6)";
+        // element.style.zIndex = 100;
+        // this.appendChild(element);
+        const btnSubmit = this.querySelector('button[type="submit"]');
+        btnSubmit.textContent = btnSubmit.textContent + "...";
+        btnSubmit.disabled = true;
     });
 });
