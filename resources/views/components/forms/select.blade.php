@@ -1,9 +1,10 @@
-@props(['type' => 'text', 'name', 'label', 'required' => false, 'placeholder'])
+@props(['type' => 'text', 'name','label', 'required' => false, 'placeholder', 'multiple' => false])
 
 <div class="mb-3">
     <label class="form-label{{ $required ? ' required' : '' }}">{{ $label }}</label>
-    <select type="text" class="form-select @error($name) is-invalid is-invalid-lite @enderror" name="{{ $name }}"
-        placeholder="{{ $placeholder }}" id="{{ $name }}" value="">
+    <select @if($multiple) multiple @endif type="text"
+        class="form-select @error($name) is-invalid is-invalid-lite @enderror"
+        name="{{ $name }}{{ $multiple ? '[]' : '' }}" placeholder="{{ $placeholder }}" id="{{ $name }}" value="">
         {{ $slot }}
     </select>
     @error($name)

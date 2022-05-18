@@ -21,4 +21,11 @@ class Teacher extends Model
         $this->setFilterableProperties($searchableColumns, $validSortColumns);
         $this->filter($query, $filters);
     }
+
+    // many-to-many
+    public function classes()
+    {
+        // tiga parameter berguna untuk mengatasi nama table class dan modelnya agar bisa dikenali oleh laravel
+        return $this->belongsToMany(Clazss::class, 'class_teacher', 'teacher_id', 'class_id');
+    }
 }

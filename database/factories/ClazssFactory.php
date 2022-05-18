@@ -17,7 +17,7 @@ class ClazssFactory extends Factory
     public function definition()
     {
         return [
-            "name" => "Kelas {$this->faker->numerify('##')}",
+            "name" => "Kelas {$this->faker->numerify('####')}",
             "major_id" => mt_rand(1, 10)
         ];
     }

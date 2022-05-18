@@ -34,7 +34,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-end align-items-center">
                             <div>
-                                <a href="{{ route('master.subjects.index') }}" class="btn btn-light">Batal</a>
+                                <a href="{{ route('master.subjects.index') }}" class="btn">Batal</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>

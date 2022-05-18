@@ -8,3 +8,10 @@ body {
 .theme-dark .form-select .ts-control .item {
     color: #fafbfc !important;
 }
+/* fix form select multiple color on dark mode */
+.theme-dark .form-select.multi > .ts-control .item {
+    color: #1b2434 !important;
+}
+.theme-dark .form-select.multi > .ts-control .item.active {
+    color: #fafbfc !important;
+}

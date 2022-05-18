@@ -28,4 +28,11 @@ class Clazss extends Model
     {
         return $this->belongsTo(Major::class);
     }
+
+    // many-to-many
+    public function teachers()
+    {
+        // tiga parameter berguna untuk mengatasi nama table class dan modelnya agar bisa dikenali oleh laravel
+        return $this->belongsToMany(Teacher::class, 'class_teacher', 'class_id', 'teacher_id');
+    }
 }
