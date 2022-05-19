@@ -15,7 +15,7 @@ class ClassController extends Controller
      */
     public function index()
     {
-        $classes = Clazss::query()->filter(request(['search', 'sort', 'direction']))
+        $classes = Clazss::query()->with('major')->filter(request(['search', 'sort', 'direction']))
             ->paginate()
             ->withQueryString();
 

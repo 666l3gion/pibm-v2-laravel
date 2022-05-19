@@ -22,6 +22,14 @@ class Teacher extends Model
         $this->filter($query, $filters);
     }
 
+    /**
+     * untuk mendapatkan data guru yang hanya memiliki kelas
+     */
+    public function scopeExistsOnClassTeacher($query)
+    {
+        return $query->with(['classes'])->whereHas("classes");
+    }
+
     // many-to-many
     public function classes()
     {

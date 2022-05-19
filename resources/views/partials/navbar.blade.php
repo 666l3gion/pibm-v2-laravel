@@ -142,7 +142,7 @@
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown {{ request()->routeIs('master.*') ? 'active' : '' }}">
+                    <li class="nav-item dropdown {{ request()->routeIs('relations.*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                             data-bs-auto-close="outside" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">

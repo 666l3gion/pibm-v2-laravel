@@ -8,6 +8,7 @@ use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
+use App\Models\ClassTeacher;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 

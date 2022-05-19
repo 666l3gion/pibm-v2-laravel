@@ -12,7 +12,6 @@ class Clazss extends Model
 
     protected $guarded = ['id'];
     protected $perPage = 20;
-    protected $with = ['major'];
     protected $table = "classes";
 
     public function scopeFilter($query, array $filters)

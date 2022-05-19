@@ -117,9 +117,8 @@
                                                     Hapus
                                                 </button>
                                             </form>
-                                            <a class="dropdown-item" {{--
-                                                href="{{ route('relations.class-teacher.edit', ['teacher' => $teacher->id]) }}"
-                                                --}}>
+                                            <a class="dropdown-item"
+                                                href="{{ route('relations.class-teacher.edit', ['class_teacher' => $teacher->id]) }}">
                                                 Edit
                                             </a>
                                         </div>

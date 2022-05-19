@@ -4,7 +4,7 @@ namespace App\Http\Requests\ClassTeacherRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreClassTeacherRequest extends FormRequest
+class ClassTeacherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,11 @@ class StoreClassTeacherRequest extends FormRequest
      */
     public function rules()
     {
+        // that regex to validation only number in string, untuk memvalidasi hanya number didalam string "123"
         return [
             'teacher_id' => 'required|numeric',
             'class_ids' => 'required|array',
-            "class_ids.*"  => "required|distinct",
+            "class_ids.*"  => "required|string|distinct|numeric",
         ];
     }
 }
