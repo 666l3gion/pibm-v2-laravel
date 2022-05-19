@@ -18,12 +18,12 @@ class Teacher extends Model
         // filterable
         $searchableColumns = ['nip', 'name', 'email'];
         $validSortColumns = ['nip', 'name', 'email', 'created_at'];
-        $this->setFilterableProperties($searchableColumns, $validSortColumns);
+        $this->setFilterableProperties($searchableColumns, $validSortColumns, 'asc');
         $this->filter($query, $filters);
     }
 
     /**
-     * untuk mendapatkan data guru yang hanya memiliki kelas
+     * untuk mendapatkan data guru yang hanya ada di table class_teacher
      */
     public function scopeExistsOnClassTeacher($query)
     {

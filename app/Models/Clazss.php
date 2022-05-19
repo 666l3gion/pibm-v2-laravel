@@ -19,8 +19,16 @@ class Clazss extends Model
         // filterable
         $searchableColumns = ['name'];
         $validSortColumns = ['name', 'created_at'];
-        $this->setFilterableProperties($searchableColumns, $validSortColumns);
+        $this->setFilterableProperties($searchableColumns, $validSortColumns, 'asc');
         $this->filter($query, $filters);
+    }
+
+    /**
+     * untuk mendapatkan data kelas yang hanya ada di table class_student
+     */
+    public function scopeExistsOnClassStudent($query)
+    {
+        return $query->with(['students'])->whereHas("students");
     }
 
     public function major()
@@ -33,5 +41,12 @@ class Clazss extends Model
     {
         // tiga parameter berguna untuk mengatasi nama table class dan modelnya agar bisa dikenali oleh laravel
         return $this->belongsToMany(Teacher::class, 'class_teacher', 'class_id', 'teacher_id');
+    }
+
+    // many-to-many
+    public function students()
+    {
+        // tiga parameter berguna untuk mengatasi nama table class dan modelnya agar bisa dikenali oleh laravel
+        return $this->belongsToMany(Student::class, 'class_student', 'class_id', 'student_id');
     }
 }

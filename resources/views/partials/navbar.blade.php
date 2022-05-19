@@ -164,9 +164,12 @@
                                 href="{{ route('relations.class-teacher.index') }}">
                                 Kelas & Guru
                             </a>
+                            <a class="dropdown-item {{ request()->routeIs('relations.class-student.*') ? 'active' : '' }}"
+                                href="{{ route('relations.class-student.index') }}">
+                                Kelas & Siswa
+                            </a>
                         </div>
                     </li>
-
                 </ul>
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\ClassStudentController;
 use App\Http\Controllers\ClassTeacherController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MajorController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Models\ClassTeacher;
+use App\Models\Clazss;
+use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +40,9 @@ Route::middleware('auth')->group(function () {
         // fix class-teacher always load Teacher explicit model binding in app\Providers\RouteServiceProvider.php
         Route::model('class-teacher', Teacher::class);
         Route::resource('/class-teacher', ClassTeacherController::class)->except('show');
+
+        Route::model('class-student', Clazss::class);
+        Route::resource('/class-student', ClassStudentController::class)->except('show');
     });
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');

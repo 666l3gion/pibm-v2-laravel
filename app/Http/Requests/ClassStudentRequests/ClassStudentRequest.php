@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ClassTeacherRequests;
+namespace App\Http\Requests\ClassStudentRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassTeacherRequest extends FormRequest
+class ClassStudentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,10 @@ class ClassTeacherRequest extends FormRequest
      */
     public function rules()
     {
-        // that regex to validation only number in string, untuk memvalidasi hanya number didalam string "123"
         return [
-            'teacher_id' => 'required|numeric',
-            'class_ids' => 'required|array',
-            "class_ids.*"  => "required|string|distinct|numeric",
+            'class_id' => 'required|numeric',
+            'student_ids' => 'required|array',
+            "student_ids.*"  => "required|string|distinct|numeric",
         ];
     }
 }

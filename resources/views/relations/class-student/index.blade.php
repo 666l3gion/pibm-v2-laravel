@@ -18,7 +18,7 @@
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
-                    <a href="{{ route('relations.class-teacher.create') }}" class="btn btn-primary">
+                    <a href="{{ route('relations.class-student.create') }}" class="btn btn-primary">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -27,7 +27,7 @@
                             <line x1="12" y1="5" x2="12" y2="19" />
                             <line x1="5" y1="12" x2="19" y2="12" />
                         </svg>
-                        Tambah Data Kelas Guru
+                        Tambah Data Kelas Siswa
                     </a>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                         <h3 class="card-title">Daftar Relasi {{ $title }}</h3>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
-                        <x-filters.sort route="relations.class-teacher.index" :sorts="
+                        <x-filters.sort route="relations.class-student.index" :sorts="
                         [
                             [
                                 'sort' => 'created_at',
@@ -55,17 +55,12 @@
                                 'text' => 'Terlama'
                             ],
                             [
-                                'sort' => 'nip',
-                                'direction' => 'asc',
-                                'text' => 'NIP'
-                            ],
-                            [
                                 'sort' => 'name',
                                 'direction' => 'asc',
                                 'text' => 'Nama'
                             ]
                         ]" />
-                        <x-filters.search route="relations.class-teacher.index" />
+                        <x-filters.search route="relations.class-student.index" />
                     </div>
                 </div>
 
@@ -74,30 +69,26 @@
                         <thead>
                             <tr>
                                 <th class="w-1">No.</th>
-                                <th>NIP</th>
-                                <th>Nama Guru</th>
-                                <th>Kelas-kelas</th>
+                                <th>Nama Kelas</th>
+                                <th>Siswa-siswa</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if( $teachers->isNotEmpty() )
-                            @foreach($teachers as $teacher)
+                            @if( $classes->isNotEmpty() )
+                            @foreach($classes as $class)
                             <tr>
-                                <td><span class="text-muted">{{ ($teachers->currentpage()-1) * $teachers->perpage() +
+                                <td><span class="text-muted">{{ ($classes->currentpage()-1) * $classes->perpage() +
                                         $loop->index + 1 }}</span></td>
-                                <td>
-                                    {{ $teacher->nip }}
+                                <td style="white-space: nowrap;">
+                                    {{ $class->name }}
                                 </td>
                                 <td>
-                                    {{ $teacher->name }}
-                                </td>
-                                <td>
-                                    @foreach ($teacher->classes as $class)
+                                    @foreach ($class->students as $student)
                                     <a target="blank"
-                                        href="{{ route('master.classes.index', ['search' => $class->name]) }}"
-                                        class="d-inline-block badge bg-success mb-1 text-uppercase">{{ $class->name
-                                        }}</a>
+                                        href="{{ route('master.students.index', ['search' => $student->nis]) }}"
+                                        class="d-inline-block badge bg-success mb-1 text-uppercase">{{ $student->name
+                                        }} - (NIS/NISN: {{ $student->nis }})</a>
                                     @endforeach
                                 </td>
                                 <td class="text-center">
@@ -106,7 +97,7 @@
                                             data-bs-toggle="dropdown">Aksi</button>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <form
-                                                action="{{ route('relations.class-teacher.destroy', ['class_teacher' => $teacher->id]) }}"
+                                                action="{{ route('relations.class-student.destroy', ['class_student' => $class->id]) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('DELETE')
@@ -117,7 +108,7 @@
                                                 </button>
                                             </form>
                                             <a class="dropdown-item"
-                                                href="{{ route('relations.class-teacher.edit', ['class_teacher' => $teacher->id]) }}">
+                                                href="{{ route('relations.class-student.edit', ['class_student' => $class->id]) }}">
                                                 Edit
                                             </a>
                                         </div>
@@ -128,7 +119,7 @@
                             @else
                             <tr>
                                 <td colspan="8">
-                                    <p class="text-danger py-3 m-0 text-center">Data relasi kelas guru tidak ditemukan.
+                                    <p class="text-danger py-3 m-0 text-center">Data relasi kelas siswa tidak ditemukan.
                                     </p>
                                 </td>
                             </tr>
@@ -138,7 +129,7 @@
                 </div>
 
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    {{ $teachers->onEachSide(5)->links() }}
+                    {{ $classes->onEachSide(5)->links() }}
                 </div>
             </div>
         </div>

@@ -23,7 +23,6 @@ class ClassTeacherRequest extends FormRequest
      */
     public function rules()
     {
-        // that regex to validation only number in string, untuk memvalidasi hanya number didalam string "123"
         return [
             'teacher_id' => 'required|numeric',
             'class_ids' => 'required|array',

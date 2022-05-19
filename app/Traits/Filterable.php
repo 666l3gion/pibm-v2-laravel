@@ -14,10 +14,13 @@ trait Filterable
     protected array $validSortColumns = [];
     protected array $validSortDirections = ['asc', 'desc'];
 
-    public function setFilterableProperties(array $searchableColumns, array $validSortColumns)
+    protected string $defaultSortDirection = "desc";
+
+    public function setFilterableProperties(array $searchableColumns, array $validSortColumns, string $defaultSortDirection = "desc")
     {
         $this->searchableColumns = $searchableColumns;
         $this->validSortColumns = $validSortColumns;
+        $this->defaultSortDirection = $defaultSortDirection;
     }
 
     private function getWheres($value): array
@@ -61,7 +64,7 @@ trait Filterable
         // default sort by created_at
         $filters['sort'] = [
             'column' => $this->isSortDataValid($filters) ? $filters[$this->keySort] : "created_at",
-            'direction' => $this->isSortDirectionDataValid($filters) ? $filters[$this->keySortDirection] : "desc"
+            'direction' => $this->isSortDirectionDataValid($filters) ? $filters[$this->keySortDirection] : $this->defaultSortDirection
         ];
 
         $query->when(

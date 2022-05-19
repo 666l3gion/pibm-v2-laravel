@@ -127,8 +127,8 @@ class ClassTeacherController extends Controller
         $data = [];
         foreach ($request->post('class_ids') as $id) {
             $data[] = [
+                'teacher_id'  => $teacher_id,
                 'class_id' => $id,
-                'teacher_id'  => $teacher_id
             ];
         }
         return $data;
