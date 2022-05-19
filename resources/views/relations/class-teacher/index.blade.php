@@ -94,7 +94,7 @@
                                 </td>
                                 <td>
                                     @foreach ($teacher->classes as $class)
-                                    <a target="blank"
+                                    <a target="_blank"
                                         href="{{ route('master.classes.index', ['search' => $class->name]) }}"
                                         class="d-inline-block badge bg-success mb-1 text-uppercase">{{ $class->name
                                         }}</a>

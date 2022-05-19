@@ -168,6 +168,14 @@
                                 href="{{ route('relations.class-student.index') }}">
                                 Kelas & Siswa
                             </a>
+                            <a class="dropdown-item {{ request()->routeIs('relations.major-subject.*') ? 'active' : '' }}"
+                                href="{{ route('relations.major-subject.index') }}">
+                                Mata Pelajaran & Jurusan
+                            </a>
+                            <a class="dropdown-item {{ request()->routeIs('relations.subject-teacher.*') ? 'active' : '' }}"
+                                href="{{ route('relations.subject-teacher.index') }}">
+                                Guru & Mata Pelajaran
+                            </a>
                         </div>
                     </li>
                 </ul>

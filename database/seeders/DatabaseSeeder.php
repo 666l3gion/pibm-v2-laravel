@@ -19,14 +19,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
-        Teacher::factory(200)->create();
+
+        Teacher::factory(10)->create();
         Major::factory(10)->create();
         Subject::factory(10)->create();
-        Student::factory(200)->create();
+        Student::factory(10)->create();
 
-        Teacher::factory(30)->hasClasses(20)->create();
-        Clazss::factory(10)->hasStudents(30)->create();
+        Teacher::factory(5)->hasClasses(5)->create();
+        Teacher::factory(5)->hasSubjects(5)->create();
+        Clazss::factory(5)->hasStudents(5)->create();
+        Subject::factory(5)->hasMajors(5)->create();
 
 
         \App\Models\User::create([

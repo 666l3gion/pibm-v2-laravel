@@ -19,7 +19,7 @@ class Clazss extends Model
         // filterable
         $searchableColumns = ['name'];
         $validSortColumns = ['name', 'created_at'];
-        $this->setFilterableProperties($searchableColumns, $validSortColumns, 'asc');
+        $this->setFilterableProperties($searchableColumns, $validSortColumns);
         $this->filter($query, $filters);
     }
 

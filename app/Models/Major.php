@@ -21,4 +21,10 @@ class Major extends Model
         $this->setFilterableProperties($searchableColumns, $validSortColumns);
         $this->filter($query, $filters);
     }
+
+    // many-to-many
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class);
+    }
 }

@@ -18,13 +18,11 @@
 
         <div class="row">
             <div class="col-md-5 mb-2">
-                @include('partials.information-cards.class-teacher')
+                @include('partials.information-cards.major-subject')
             </div>
             <div class="col-md-6">
-                <form action="{{ route('relations.class-teacher.update', ['class_teacher' => $teacher->id]) }}"
-                    method="post" class="form-disable">
+                <form action="{{ route('relations.major-subject.store') }}" method="post" class="form-disable">
                     @csrf
-                    @method('PUT')
 
                     <div class="card mb-2">
                         <div class="card-header">
@@ -33,29 +31,25 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <x-forms.select :required="true" name="teacher_id" label="Guru"
-                                        placeholder="Pilih guru">
-                                        @foreach ($avalaibleTeachers as $avalaibleTeacher)
-                                        @if( old('teacher_id', $teacher->id) == $avalaibleTeacher->id)
-                                        <option selected value="{{ $avalaibleTeacher->id }}">{{
-                                            $avalaibleTeacher->name
-                                            }}</option>
+                                    <x-forms.select :required="true" name="subject_id" label="Mata Pelajaran"
+                                        placeholder="Pilih mata pelajaran">
+                                        @foreach ($avalaibleSubjects as $subject)
+                                        @if( old('subject_id') == $subject->id)
+                                        <option selected value="{{ $subject->id }}">{{ $subject->name }}</option>
                                         @else
-                                        <option value="{{ $avalaibleTeacher->id }}">{{ $avalaibleTeacher->name }}
-                                        </option>
+                                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                         @endif
                                         @endforeach
                                     </x-forms.select>
 
-                                    <x-forms.select multiple="true" :required="true" name="class_ids"
-                                        label="Kelas-kelas" placeholder="Pilih kelas-kelas">
-                                        @foreach ($allClasses as $class)
-                                        @foreach ($teacher->classes as $cl)
-                                        @if( old('class_id', $cl->id) == $class->id)
-                                        <option selected value="{{ $class->id }}">{{ $class->name }}</option>
+                                    <x-forms.select multiple="true" :required="true" name="major_ids"
+                                        label="Jurusan-jurusan" placeholder="Pilih jurusan-jurusan">
+                                        @foreach ($majors as $major)
+                                        @if( old('major_id') == $major->id)
+                                        <option selected value="{{ $major->id }}">{{ $major->name }}</option>
+                                        @else
+                                        <option value="{{ $major->id }}">{{ $major->name }}</option>
                                         @endif
-                                        @endforeach
-                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
                                         @endforeach
                                     </x-forms.select>
                                 </div>
@@ -63,7 +57,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-end align-items-center">
                             <div>
-                                <a href="{{ route('relations.class-teacher.index') }}" class="btn">Batal</a>
+                                <a href="{{ route('relations.major-subject.index') }}" class="btn">Batal</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>

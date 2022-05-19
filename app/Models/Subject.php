@@ -21,4 +21,32 @@ class Subject extends Model
         $this->setFilterableProperties($searchableColumns, $validSortColumns);
         $this->filter($query, $filters);
     }
+
+    /**
+     * untuk mendapatkan data mapel yang hanya ada di table major_subject
+     */
+    public function scopeExistsOnMajorSubject($query)
+    {
+        return $query->with(['majors'])->whereHas("majors");
+    }
+
+    /**
+     * untuk mendapatkan data mapel yang hanya ada di table subject_teacher
+     */
+    public function scopeExistsOnTeacherMajor($query)
+    {
+        return $query->with(['teachers'])->whereHas("teachers");
+    }
+
+    // many-to-many
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class);
+    }
+
+    // many-to-many
+    public function majors()
+    {
+        return $this->belongsToMany(Major::class);
+    }
 }

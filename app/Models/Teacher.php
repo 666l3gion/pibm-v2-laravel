@@ -18,7 +18,7 @@ class Teacher extends Model
         // filterable
         $searchableColumns = ['nip', 'name', 'email'];
         $validSortColumns = ['nip', 'name', 'email', 'created_at'];
-        $this->setFilterableProperties($searchableColumns, $validSortColumns, 'asc');
+        $this->setFilterableProperties($searchableColumns, $validSortColumns);
         $this->filter($query, $filters);
     }
 
@@ -30,10 +30,24 @@ class Teacher extends Model
         return $query->with(['classes'])->whereHas("classes");
     }
 
+    /**
+     * untuk mendapatkan data guru yang hanya ada di table student_teacher
+     */
+    public function scopeExistsOnSubjectTeacher($query)
+    {
+        return $query->with(['subjects'])->whereHas("subjects");
+    }
+
     // many-to-many
     public function classes()
     {
         // tiga parameter berguna untuk mengatasi nama table class dan modelnya agar bisa dikenali oleh laravel
         return $this->belongsToMany(Clazss::class, 'class_teacher', 'teacher_id', 'class_id');
+    }
+
+    // many-to-many
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class);
     }
 }

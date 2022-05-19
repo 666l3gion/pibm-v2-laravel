@@ -18,10 +18,10 @@
 
         <div class="row">
             <div class="col-md-5 mb-2">
-                @include('partials.information-cards.class-teacher')
+                @include('partials.information-cards.subject-teacher')
             </div>
             <div class="col-md-6">
-                <form action="{{ route('relations.class-teacher.update', ['class_teacher' => $teacher->id]) }}"
+                <form action="{{ route('relations.subject-teacher.update', ['subject_teacher' => $teacher->id]) }}"
                     method="post" class="form-disable">
                     @csrf
                     @method('PUT')
@@ -38,8 +38,7 @@
                                         @foreach ($avalaibleTeachers as $avalaibleTeacher)
                                         @if( old('teacher_id', $teacher->id) == $avalaibleTeacher->id)
                                         <option selected value="{{ $avalaibleTeacher->id }}">{{
-                                            $avalaibleTeacher->name
-                                            }}</option>
+                                            $avalaibleTeacher->name }}</option>
                                         @else
                                         <option value="{{ $avalaibleTeacher->id }}">{{ $avalaibleTeacher->name }}
                                         </option>
@@ -47,15 +46,15 @@
                                         @endforeach
                                     </x-forms.select>
 
-                                    <x-forms.select multiple="true" :required="true" name="class_ids"
-                                        label="Kelas-kelas" placeholder="Pilih kelas-kelas">
-                                        @foreach ($allClasses as $class)
-                                        @foreach ($teacher->classes as $cl)
-                                        @if( old('class_id', $cl->id) == $class->id)
-                                        <option selected value="{{ $class->id }}">{{ $class->name }}</option>
+                                    <x-forms.select multiple="true" :required="true" name="subject_ids"
+                                        label="Mata pelajaran" placeholder="Pilih mata pelajaran">
+                                        @foreach ($allSubjects as $subject)
+                                        @foreach ($teacher->subjects as $sj) {{-- untuk function old() --}}
+                                        @if( old('subject_id', $sj->id) == $subject->id)
+                                        <option selected value="{{ $subject->id }}">{{ $subject->name }}</option>
                                         @endif
                                         @endforeach
-                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                         @endforeach
                                     </x-forms.select>
                                 </div>
@@ -63,7 +62,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-end align-items-center">
                             <div>
-                                <a href="{{ route('relations.class-teacher.index') }}" class="btn">Batal</a>
+                                <a href="{{ route('relations.subject-teacher.index') }}" class="btn">Batal</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>

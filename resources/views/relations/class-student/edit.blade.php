@@ -53,10 +53,9 @@
                                         otomatis menselected multiple --}}
                                         @if( old('student_id', $st->id) == $student->id)
                                         <option selected value="{{ $student->id }}">{{ $student->name }}</option>
-                                        @else
-                                        <option value="{{ $student->id }}">{{ $student->name }}</option>
                                         @endif
                                         @endforeach
+                                        <option value="{{ $student->id }}">{{ $student->name }}</option>
                                         @endforeach
                                     </x-forms.select>
                                 </div>
