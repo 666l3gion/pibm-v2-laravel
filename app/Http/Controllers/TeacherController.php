@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequests\StoreTeacherRequest;
 use App\Http\Requests\TeacherRequests\UpdateTeacherRequest;
-use App\Models\Role;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

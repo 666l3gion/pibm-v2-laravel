@@ -11,6 +11,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SubjectTeacherController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UsersController;
 use App\Models\ClassTeacher;
 use App\Models\Clazss;
 use App\Models\Student;
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
         // });
         // Route::middleware('role:superadmin')->group(function () {
         // });
+        Route::resource('/users', UsersController::class)->except(['create', 'store', 'show']);
     });
     Route::prefix('/master')->name('master.')->group(function () {
         Route::resource('/teachers', TeacherController::class)->except('show');
