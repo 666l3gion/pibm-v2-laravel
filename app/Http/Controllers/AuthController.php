@@ -20,6 +20,8 @@ class AuthController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
+        // cek apakah user aktif
+        $credentials['is_active'] = 1;
 
         $remember = $request->get('remember') == "on" ?? false;
 
