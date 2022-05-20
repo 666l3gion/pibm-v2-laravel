@@ -85,7 +85,6 @@
             <div class="container-xl">
                 <ul class="navbar-nav navbar-overflow">
 
-                    @if (auth()->user()->isSuperadminOrAdmin())
                     <li class="nav-item {{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -104,17 +103,19 @@
                         </a>
                     </li>
 
+                    @if (auth()->user()->isSuperadminOrAdmin())
                     <li class="nav-item dropdown {{ request()->routeIs('master.*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                             data-bs-auto-close="outside" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                <!-- Download SVG icon from http://tabler-icons.io/i/folders -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path
-                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                        d="M9 4h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+                                    <path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2" />
                                 </svg>
                             </span>
                             <span class="nav-link-title">
@@ -149,13 +150,13 @@
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                             data-bs-auto-close="outside" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                <!-- Download SVG icon from http://tabler-icons.io/i/link -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                                    <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+                                    <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
                                 </svg>
                             </span>
                             <span class="nav-link-title">
@@ -181,17 +182,21 @@
                             </a>
                         </div>
                     </li>
+                    @endif
 
+                    @if (auth()->user()->isSuperadmin())
                     <li class="nav-item {{ request()->routeIs('dashboard.users.index') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard.users.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <!-- Download SVG icon from http://tabler-icons.io/i/users -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <circle cx="12" cy="13" r="2" />
-                                    <line x1="13.45" y1="11.55" x2="15.5" y2="9.5" />
-                                    <path d="M6.4 20a9 9 0 1 1 11.2 0z" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                 </svg>
                             </span>
                             <span class="nav-link-title">
@@ -200,7 +205,6 @@
                         </a>
                     </li>
                     @endif
-
                 </ul>
             </div>
         </div>

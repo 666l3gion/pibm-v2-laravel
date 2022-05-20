@@ -25,10 +25,15 @@ Route::middleware('auth')->group(function () {
         Route::resource('/users', UsersController::class)->only(['edit', 'update'])->middleware('can:update,user');
     });
 
-    Route::middleware(['role:superadmin,admin'])->group(function () {
+    // hanya bisa diakses oleh superadmin
+    Route::middleware(['role:superadmin'])->group(function () {
         Route::prefix('/')->name('dashboard.')->group(function () {
             Route::resource('/users', UsersController::class)->only(['index', 'destroy']);
         });
+    });
+
+    // hanya bisa diakses oleh superadmin dan admin
+    Route::middleware(['role:superadmin,admin'])->group(function () {
 
         Route::prefix('/master')->name('master.')->group(function () {
             Route::resource('/teachers', TeacherController::class)->except('show');
