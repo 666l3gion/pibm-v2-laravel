@@ -85,6 +85,7 @@
             <div class="container-xl">
                 <ul class="navbar-nav navbar-overflow">
 
+                    @if (auth()->user()->isSuperadminOrAdmin())
                     <li class="nav-item {{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -143,6 +144,7 @@
                             </a>
                         </div>
                     </li>
+
                     <li class="nav-item dropdown {{ request()->routeIs('relations.*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                             data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -197,6 +199,8 @@
                             </span>
                         </a>
                     </li>
+                    @endif
+
                 </ul>
             </div>
         </div>

@@ -35,9 +35,9 @@
                                     <x-forms.input :required="true" name="email" label="Email User"
                                         old="{{ old('email', $user->email) }}" />
 
-                                    @if (!$user->isSuperadmin()) {{-- jika
+                                    @if (!$user->isSuperadmin() && !$user->ownByLoggedInUser()) {{-- jika
                                     akun yang diedit bukan akun
-                                    superadmin --}}
+                                    milik yang ssat ini login --}}
                                     <x-forms.select :required="true" name="role" label="Level User"
                                         placeholder="Pilih level user">
                                         @foreach ($user->avalaibleRoles() as $role)

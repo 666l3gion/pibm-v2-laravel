@@ -58,6 +58,11 @@ class User extends Authenticatable
         return [self::$ADMIN_ROLE, self::$GURU_ROLE, self::$SISWA_ROLE];
     }
 
+    public function ownByLoggedInUser()
+    {
+        return $this->id === auth()->user()->id;
+    }
+
     public function scopeFilter($query, array $filters)
     {
         // filterable

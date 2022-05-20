@@ -52,7 +52,7 @@
                                 'sort' => 'role',
                                 'direction' => 'asc',
                                 'text' => 'Level'
-                    ],
+                            ],
                             [
                                 'sort' => 'is_active',
                                 'direction' => 'asc',

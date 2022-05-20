@@ -31,7 +31,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'required|email',
         ];
 
-        if (!$user->isSuperadmin() || $user->id !== auth()->user()->id) {
+        if (!$user->isSuperadmin() && !$user->ownByLoggedInUser()) {
             $rules['role'] = 'required|in:' . join(',', $user->avalaibleRoles());
             $rules['is_active'] = 'required|in:1,0';
         }
