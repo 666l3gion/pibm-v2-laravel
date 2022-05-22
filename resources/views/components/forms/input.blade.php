@@ -1,4 +1,4 @@
-@props(['type' => 'text', 'name', 'label', 'old', 'required' => false])
+@props(['type' => 'text', 'name', 'label', 'old' => "", 'required' => false])
 
 <div class="mb-3">
     <label class="form-label{{ $required ? ' required' : '' }}" for="{{ $name }}">{{ $label }}</label>

@@ -16,9 +16,10 @@
                 <h2 class="card-title text-center mb-4">eLearning SMK Negeri 1 Stabat</h2>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" autocapitalize="false" autofocus
+                    <input type="email" autofocus
                         class="form-control @error('email') is-invalid is-invalid-lite @enderror"
-                        autocomplete="email-login" name="email" value="{{ old('email') }}">
+                        autocomplete="email-login" name="email" value="{{ old('email') }}"
+                        placeholder="Email address anda">
                     @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -57,7 +58,7 @@
                 <div class="mb-2">
                     <label class="form-check">
                         <input type="checkbox" class="form-check-input" name="remember" />
-                        <span class="form-check-label">Remember me on this device</span>
+                        <span class="form-check-label">Ingatkan aku di perangkat ini</span>
                     </label>
                 </div>
                 <div class="form-footer">

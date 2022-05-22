@@ -63,11 +63,13 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-
+    // auth
+    Route::put('/change-password', [AuthController::class, 'changePassword'])->name('auth.change-password');
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::middleware('guest')->group(function () {
+    // auth
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate']);
 });

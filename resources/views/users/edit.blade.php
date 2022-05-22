@@ -84,6 +84,37 @@
                     </div>
                 </form>
             </div>
+            <div class="col-md-6">
+                <form action="{{ route('auth.change-password') }}" method="post"
+                    onsubmit="return (confirm('Apakah anda yakin ingin mengubah password ini?') && showLoading(this) )">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            <h4 class="card-title">Form Ubah Password</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <x-forms.input type="password" :required="true" name="current_password"
+                                        label="Password Saat Ini" />
+                                    <x-forms.input type="password" :required="true" name="new_password"
+                                        label="Password Baru" />
+                                    <x-forms.input type="password" :required="true" name="new_password_confirmation"
+                                        label="Konfirmasi Password Baru" placeholder="Masukan password baru" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end align-items-center">
+                            <div>
+                                <a href="{{ route('dashboard.users.index') }}" class="btn">Batal</a>
+                                <button type="submit" class="btn btn-warning">Ganti Password</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
