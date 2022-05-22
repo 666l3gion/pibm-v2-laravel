@@ -11,7 +11,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SubjectTeacherController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
 use App\Models\ClassTeacher;
 use App\Models\Clazss;
 use App\Models\Student;
@@ -22,13 +22,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::prefix('/')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
-        Route::resource('/users', UsersController::class)->only(['edit', 'update'])->middleware('can:update,user');
+        Route::resource('/users', UserController::class)->only(['edit', 'update'])->middleware('can:update,user');
     });
 
     // hanya bisa diakses oleh superadmin
     Route::middleware(['role:superadmin'])->group(function () {
         Route::prefix('/')->name('dashboard.')->group(function () {
-            Route::resource('/users', UsersController::class)->only(['index', 'destroy']);
+            Route::resource('/users', UserController::class)->only(['index', 'destroy']);
         });
     });
 
@@ -39,10 +39,12 @@ Route::middleware('auth')->group(function () {
             Route::resource('/teachers', TeacherController::class)->except('show');
             Route::post('/teachers/active/{teacher}', [TeacherController::class, 'active'])->name('teachers.active');
 
+            Route::resource('/students', StudentController::class)->except('show');
+            Route::post('/students/active/{student}', [StudentController::class, 'active'])->name('students.active');
+
             Route::resource('/majors', MajorController::class)->except('show');
             Route::resource('/classes', ClassController::class)->except('show');
             Route::resource('/subjects', SubjectController::class)->except('show');
-            Route::resource('/students', StudentController::class)->except('show');
         });
 
         Route::prefix('/relations')->name('relations.')->group(function () {

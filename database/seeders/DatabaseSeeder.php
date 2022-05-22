@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         Teacher::factory(10)->create();
         Major::factory(10)->create();
         Subject::factory(10)->create();
@@ -35,7 +34,8 @@ class DatabaseSeeder extends Seeder
             "name" => "Superadmin",
             "email" => "superadmin@gmail.com",
             "password" => Hash::make("123"),
-            "role" => 'superadmin'
+            "role" => 'superadmin',
+            'is_active' => 1
         ]);
     }
 }

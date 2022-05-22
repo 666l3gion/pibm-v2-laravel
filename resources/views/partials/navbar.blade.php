@@ -60,7 +60,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <div class="p-2 text-center">
-                        <h5 class="small mb-1">{{ auth()->user()->name }}</h5>
+                        <h5 class="small mb-1">{{ auth()->user()->name }} ~ <span class="text-success">{{
+                                Str::ucfirst(auth()->user()->role) }}</span></h5>
                         <small class="small">{{ auth()->user()->email }}</small>
                     </div>
                     <div class="dropdown-divider"></div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StudentRequests\StoreStudentRequest;
 use App\Http\Requests\StudentRequests\UpdateStudentRequest;
 use App\Models\Student;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -89,5 +91,32 @@ class StudentController extends Controller
     {
         $student->delete();
         return redirect()->route('master.students.index')->with('success', 'Data siswa berhasil dihapus.');
+    }
+
+    /**
+     * Add data siswa to users
+     */
+    public function active(Student $student)
+    {
+        // is student already actived/registered
+        $isActive = $student->user_id; // user_id or null
+
+        if ($isActive) { // jika sudah aktif (maka hapus)
+            User::find($student->user_id)->delete();
+            $student->user_id = null;
+            $student->save();
+            return redirect()->route('master.students.index')->with('success', "Data siswa berhasil di hapus dari data user");
+        }
+
+        $user = User::create([
+            "name" => $student->name,
+            "role" => User::$SISWA_ROLE, // set role as guru/student
+            "password" => Hash::make($student->nis),
+            "email" => $student->email,
+        ]);
+
+        $student->user_id = $user->id;
+        $student->save();
+        return redirect()->route('master.students.index')->with('success', "Data siswa berhasil diaktifkan dengan email = '$student->email' dan password '$student->nis' (NIS).");
     }
 }

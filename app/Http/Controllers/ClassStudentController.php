@@ -38,7 +38,8 @@ class ClassStudentController extends Controller
     {
         // ambil data kelas yang belum ada di class_student table
         $avalaibleClasses = Clazss::query()->whereDoesntHave("students")->get();
-        $students = Student::query()->orderBy('name', 'asc')->get();
+        // ambil data siswa yang belum ada di class_student table
+        $students = Student::query()->whereDoesntHave("classes")->orderBy('name', 'asc')->get();
 
         return view('relations.class-student.create', [
             "pretitle" => "Relasi Kelas Siswa",

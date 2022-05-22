@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequests\UpdateUserRequest;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -51,7 +52,10 @@ class UsersController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());
-        return redirect()->route("dashboard.users.index")->with('success', 'Data user berhasil diubah.');
+        if (auth()->user()->isSuperadmin()) {
+            return redirect()->route("dashboard.users.index")->with('success', 'Data user berhasil diubah.');
+        }
+        return redirect()->route("dashboard.index")->with('success', 'Data user berhasil diubah.');
     }
 
     /**
@@ -63,6 +67,8 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        // untuk menghapus user_id di data guru
+        Teacher::query()->where('user_id', $user->id)->update(['user_id' => null]);
         return redirect()->route('dashboard.users.index')->with('success', 'Data user berhasil dihapus.');
     }
 }

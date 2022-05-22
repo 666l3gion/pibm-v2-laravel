@@ -120,6 +120,15 @@
                                                     Hapus
                                                 </button>
                                             </form>
+                                            <form
+                                                action="{{ route('master.students.active', ['student' => $student->id]) }}"
+                                                method="post">
+                                                @csrf
+
+                                                <button type="submit" class="dropdown-item">
+                                                    {{ $student->user_id ? 'Hapus Akun' : 'Aktifkan' }}
+                                                </button>
+                                            </form>
                                             <a class="dropdown-item"
                                                 href="{{ route('master.students.edit', ['student' => $student->id]) }}">
                                                 Edit
