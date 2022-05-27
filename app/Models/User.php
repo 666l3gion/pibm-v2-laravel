@@ -60,6 +60,8 @@ class User extends Authenticatable
 
     public function ownByLoggedInUser()
     {
+        // $this artinya user model yang digunakan
+        // seperti User $user
         return $this->id === auth()->user()->id;
     }
 

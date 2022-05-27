@@ -84,6 +84,8 @@
                     </div>
                 </form>
             </div>
+
+            @if(auth()->user()->id === $user->id)
             <div class="col-md-6">
                 <form action="{{ route('auth.change-password') }}" method="post"
                     onsubmit="return (confirm('Apakah anda yakin ingin mengubah password ini?') && showLoading(this) )">
@@ -115,6 +117,7 @@
                     </div>
                 </form>
             </div>
+            @endif
         </div>
     </div>
 </div>
