@@ -49,8 +49,8 @@
                                         <label class="form-label required">Soal</label>
                                         <div class="mb-1">
                                             @if ($question->image)
-                                            <img src="{{ asset('storage/' . $question->image) }}"
-                                                alt="Question's Image">
+                                            <img src="{{ asset('storage/' . $question->image) }}" alt="Question's Image"
+                                                class="mb-2">
                                             <input type="hidden" name="old-image" value="{{ $question->image }}">
                                             @endif
 

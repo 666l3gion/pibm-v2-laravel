@@ -42,6 +42,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Question::class);
         $teacher = Teacher::query()->where('user_id', '=', auth()->user()->id)->with('subjects')->first();
         $examTypes = ExamType::all();
         return view('questions.create', [
@@ -60,6 +61,7 @@ class QuestionController extends Controller
      */
     public function store(QuestionRequest $request)
     {
+        $this->authorize('create', Question::class);
         $validatedData = $request->validated();
         $validatedData['image'] = $request->file('image') && $request->file('image')->store('question-images');
         Question::create($validatedData);
@@ -89,6 +91,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
+        $this->authorize('update', $question);
         $teacher = Teacher::query()->where('user_id', '=', auth()->user()->id)->with('subjects')->first();
         $examTypes = ExamType::all();
 
@@ -110,6 +113,7 @@ class QuestionController extends Controller
      */
     public function update(QuestionRequest $request, Question $question)
     {
+        $this->authorize('update', $question);
         $validatedData = $request->validated();
         if ($request->file('image')) {
             if ($request->post('old-image')) Storage::delete($request->post('old-image'));
@@ -127,6 +131,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
+        $this->authorize('delete', $question);
         $question->delete();
         return redirect()->route('questions.index')->with('success', 'Data soal berhasil dihapus.');
     }

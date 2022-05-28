@@ -15,6 +15,7 @@
                 </h2>
             </div>
 
+            @can('create', App\Models\Question::class)
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
@@ -31,6 +32,7 @@
                     </a>
                 </div>
             </div>
+            @endcan
         </div>
     </div>
 
@@ -95,6 +97,7 @@
                                         <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport"
                                             data-bs-toggle="dropdown">Aksi</button>
                                         <div class="dropdown-menu dropdown-menu-end">
+                                            @can('delete', $question)
                                             <form
                                                 action="{{ route('questions.destroy', ['question' => $question->id]) }}"
                                                 method="post">
@@ -106,14 +109,17 @@
                                                     Hapus
                                                 </button>
                                             </form>
+                                            @endcan
                                             <a class="dropdown-item"
                                                 href="{{ route('questions.show', ['question' => $question->id]) }}">
                                                 Detail
                                             </a>
+                                            @can('update', $question)
                                             <a class="dropdown-item"
                                                 href="{{ route('questions.edit', ['question' => $question->id]) }}">
                                                 Edit
                                             </a>
+                                            @endcan
                                         </div>
                                     </span>
                                 </td>

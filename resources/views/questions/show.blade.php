@@ -29,6 +29,9 @@
                 <div class="card-body">
                     <div>
                         <h3>Soal</h3>
+                        @if ($question->image)
+                        <img src="{{ asset('storage/' . $question->image) }}" alt="Question's Image" class="mb-3">
+                        @endif
                         <div>
                             {!! $question->question !!}
                         </div>
