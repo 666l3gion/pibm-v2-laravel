@@ -18,14 +18,12 @@ const forms = document.querySelectorAll(".form-disable");
 
 forms?.forEach((form) => {
     form.addEventListener("submit", function (e) {
-        showLoading();
+        showLoading(this);
     });
 });
 
 function showLoading(_this) {
-    const btnSubmit = _this
-        ? _this.querySelector('button[type="submit"]')
-        : this.querySelector('button[type="submit"]');
+    const btnSubmit = _this.querySelector('button[type="submit"]');
     document.getElementById("progress-bar-app").classList.remove("d-none");
     btnSubmit.textContent = btnSubmit.textContent + "...";
     btnSubmit.disabled = true;

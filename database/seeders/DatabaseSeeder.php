@@ -37,5 +37,12 @@ class DatabaseSeeder extends Seeder
             "role" => 'superadmin',
             'is_active' => 1
         ]);
+
+        \App\Models\ExamType::create([
+            "name" => "Ujian Semester Genap",
+        ]);
+        \App\Models\ExamType::create([
+            "name" => "Ujian Semester Ganjil",
+        ]);
     }
 }

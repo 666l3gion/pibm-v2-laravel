@@ -19,6 +19,7 @@
     <link href="{{ asset('tabler/dist/css/tabler-flags.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('tabler/dist/css/tabler-vendors.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('tabler/dist/css/demo.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('quilljs/quill.snow.css') }}" rel="stylesheet" />
 
     {{--
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,6 +46,9 @@
     <!-- Tabler Core --> --}}
     <script src="{{ asset('tabler/dist/js/tabler.min.js') }}"></script>
     <script src="{{ asset('tabler/dist/js/demo.min.js') }}"></script>
+    {{-- Quill js --}}
+    <script src="{{ asset('quilljs/quill.min.js') }}"></script>
+
     <!-- My Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 

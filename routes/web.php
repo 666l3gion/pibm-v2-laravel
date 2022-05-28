@@ -5,8 +5,10 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassStudentController;
 use App\Http\Controllers\ClassTeacherController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MajorSubjectController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SubjectTeacherController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Models\ClassTeacher;
 use App\Models\Clazss;
+use App\Models\Question;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -61,6 +64,12 @@ Route::middleware('auth')->group(function () {
             Route::model('subject-teacher', Teacher::class);
             Route::resource('/subject-teacher', SubjectTeacherController::class)->except('show');
         });
+
+        Route::resource('/exam-types', ExamTypeController::class)->except('show');
+    });
+
+    Route::middleware(['role:superadmin,admin,guru'])->group(function () {
+        Route::resource('/questions', QuestionController::class);
     });
 
     // auth
