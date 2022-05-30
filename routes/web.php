@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassStudentController;
 use App\Http\Controllers\ClassTeacherController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MajorSubjectController;
@@ -66,6 +67,10 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::resource('/exam-types', ExamTypeController::class)->except('show');
+    });
+
+    Route::middleware(['role:guru,siswa'])->group(function () {
+        Route::resource('/exams', ExamController::class);
     });
 
     Route::middleware(['role:superadmin,admin,guru'])->group(function () {
