@@ -45,4 +45,12 @@ class ExamPolicy
         $teacher = Teacher::find($exam->teacher_id);
         return $user->isTeacher() && $user->id == $teacher->user_id;
     }
+
+    public function sheet(User $user, Exam $exam)
+    {
+        $student = Student::query()->where('user_id', '=', $user->id)->with(['classes'])->first();
+        // cek apakah yang mengkases detail adalah siswa dan siswa tersebut berelasi ke kelas dari ujian ini
+        return $user->isStudent()
+            && $student->classes->contains('id', $exam->class_id);
+    }
 }

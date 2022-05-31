@@ -17,6 +17,8 @@
         </div>
 
         <div class="row">
+            {{-- refactor dengan mengunakan authorization (policy or gate). @can --}}
+            @if (auth()->user()->isSuperadminOrAdmin())
             <div class="col-md-6">
                 <form action="{{ route('dashboard.users.update', ['user' => $user->id]) }}" method="post"
                     class="form-disable">
@@ -84,6 +86,7 @@
                     </div>
                 </form>
             </div>
+            @endif
 
             @if(auth()->user()->id === $user->id)
             <div class="col-md-6">

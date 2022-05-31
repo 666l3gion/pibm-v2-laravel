@@ -6,8 +6,11 @@ use App\Http\Requests\ExamRequests\ExamRequest;
 use Illuminate\Support\Str;
 use App\Models\Exam;
 use App\Models\ExamType;
+use App\Models\Question;
 use App\Models\Student;
+use App\Models\StudentAnswer;
 use App\Models\Teacher;
+use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
@@ -96,5 +99,62 @@ class ExamController extends Controller
         $this->authorize('delete', $exam);
         $exam->delete();
         return redirect()->route('exams.index')->with('success', 'Data ujian berhasil dihapus.');
+    }
+
+    public function sheet(Exam $exam)
+    {
+        $this->authorize('sheet', $exam);
+        // cek apakah ujian sedang berlansung, jika tidak throw halaman error dengan code forbidden
+        if (strtotime($exam->start_date) > time() || strtotime($exam->end_date) < time())
+            abort(403, 'Ujian belum dimulai atau ujian sudah berakhir');
+        // TODO: implement cek apakah sudah mengikuti ujian
+
+        $exam->load(['subject', 'class', 'teacher']);
+        // ambil siswa yang mengikuti ujian ssat ini
+        $student = Student::query()->where('user_id', '=', auth()->user()->id)->first();
+        // ambil soal dengan mata pelajaran dan guru dari ujian saat ini
+        $questions = Question::query()
+            ->where('teacher_id', '=', $exam->teacher->id)
+            ->where('subject_id', '=', $exam->subject->id)
+            ->where('exam_type_id', '=', $exam->exam_type_id)
+            ->with(['studentAnswer'])
+            ->limit($exam->total_question)
+            ->get();
+
+        return view('exams.sheet', [
+            "pretitle" => "Ujian",
+            "title" => "Lembar Ujian",
+            "exam" => $exam,
+            'student' => $student,
+            'questions' => $questions
+        ]);
+    }
+
+    public function saveOneQuestion(Request $request, Exam $exam)
+    {
+        $this->authorize('sheet', $exam);
+        if (strtotime($exam->start_date) > time() || strtotime($exam->end_date) < time())
+            abort(403, 'Ujian belum dimulai atau ujian sudah berakhir');
+
+        $idQuestion = $request->post('idQuestion');
+        $option = $request->post('option');
+
+        // cek apakah idQuestion dan user id sudah ada di student_answers
+        // jika belum insert
+        // jika sudah update
+        $studentAnswer = StudentAnswer::updateOrCreate([
+            "user_id" => auth()->user()->id,
+            "question_id" => $idQuestion
+        ], [
+            "answer" => $option
+        ]);
+
+        return ['success' => true, 'studentAnswer' => $studentAnswer];
+    }
+
+    public function saveExam(Request $request, Exam $exam)
+    {
+        // handle jika siswa selesai pada saat waktu ujian habis
+        dd($request);
     }
 }

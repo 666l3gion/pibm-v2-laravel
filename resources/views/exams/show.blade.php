@@ -70,11 +70,13 @@
 
                             <div>
                                 @if (strtotime($exam->start_date) > time())
-                                <p>Ujian akan dimulai pada {{ $exam->start_date }}.</p>
+                                <p>Ujian akan dimulai pada {{ $exam->start_date }} ({{ date('i',
+                                    strtotime($exam->start_date) -
+                                    time()) }} menit lagi).</p>
                                 @elseif (strtotime($exam->end_date) > time())
-                                <a href="" class="btn btn-primary">Masuk</a>
+                                <a href="{{ route('exams.sheet', $exam->id) }}" class="btn btn-primary">Masuk</a>
                                 @else
-                                <p class="text-danger">Anda terlambat untuk mengikuti ujian.</p>
+                                <p class="text-danger">Anda terlambat untuk mengikuti ujian ini.</p>
                                 @endif
                             </div>
                         </div>

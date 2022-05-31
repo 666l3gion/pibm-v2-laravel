@@ -15,3 +15,24 @@ body {
 .theme-dark .form-select.multi > .ts-control .item.active {
     color: #fafbfc !important;
 }
+
+.reset-p-margin > p {
+    margin: 0 !important;
+}
+
+.theme-dark .img-thumbnail {
+    background-color: #19263b !important;
+    border-color: #1b2434 !important;
+}
+
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+#back-to-top * {
+    margin: 0 !important;
+}

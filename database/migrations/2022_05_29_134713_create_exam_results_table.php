@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->integer('score');
             $table->integer('total_right_answer');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(false); // false == belum selesai ujian, true === sebaliknya
             $table->timestamps();
         });
     }

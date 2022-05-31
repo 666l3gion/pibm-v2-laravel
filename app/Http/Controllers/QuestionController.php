@@ -63,7 +63,9 @@ class QuestionController extends Controller
     {
         $this->authorize('create', Question::class);
         $validatedData = $request->validated();
-        $validatedData['image'] = $request->file('image') && $request->file('image')->store('question-images');
+        if ($request->file('image'))
+            $validatedData['image'] = $request->file('image')->store('question-images');
+
         Question::create($validatedData);
         return redirect()->route("questions.index")->with('success', 'Data soal berhasil ditambahkan.');
     }

@@ -30,4 +30,9 @@ class Question extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+
+    public function studentAnswer()
+    {
+        return $this->hasOne(StudentAnswer::class);
+    }
 }

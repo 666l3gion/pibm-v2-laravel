@@ -73,8 +73,15 @@ Route::middleware('auth')->group(function () {
         Route::resource('/exams', ExamController::class);
     });
 
+    Route::middleware(['role:siswa'])->group(function () {
+        Route::get('/exams/{exam}/sheet', [ExamController::class, 'sheet'])->name('exams.sheet');
+        Route::post('/exams/{exam}/save-one', [ExamController::class, 'saveOneQuestion'])->name('exams.save-one-question');
+        Route::post('/exams/{exam}/save', [ExamController::class, 'saveExam'])->name('exams.save-exam');
+    });
+
     Route::middleware(['role:superadmin,admin,guru'])->group(function () {
         Route::resource('/questions', QuestionController::class);
+        Route::get('/exams/{exam}/save', [ExamController::class, 'saveExam'])->name('exams.save-exam');
     });
 
     // auth
