@@ -141,7 +141,9 @@
                                         <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport"
                                             data-bs-toggle="dropdown">Aksi</button>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            @can('delete', $exam)
+                                            {{-- disini --}}
+                                            {{-- untuk mengurangi query (updateOrDelete) --}}
+                                            @can('updateOrDelete', $exam)
                                             <form action="{{ route('exams.destroy', ['exam' => $exam->id]) }}"
                                                 method="post">
                                                 @csrf
@@ -152,17 +154,20 @@
                                                     Hapus
                                                 </button>
                                             </form>
+                                            <a class="dropdown-item"
+                                                href="{{ route('exams.edit', ['exam' => $exam->id]) }}">
+                                                Edit
+                                            </a>
                                             @endcan
                                             @can('view', $exam)
                                             <a class="dropdown-item"
                                                 href="{{ route('exams.show', ['exam' => $exam->id]) }}">
                                                 Ikuti Ujian
                                             </a>
-                                            @endcan
-                                            @can('update', $exam)
+                                            @else {{-- sudah menyelesaikan ujian --}}
                                             <a class="dropdown-item"
-                                                href="{{ route('exams.edit', ['exam' => $exam->id]) }}">
-                                                Edit
+                                                href="{{ route('exams.show', ['exam' => $exam->id]) }}">
+                                                Lihat Hasil
                                             </a>
                                             @endcan
                                         </div>

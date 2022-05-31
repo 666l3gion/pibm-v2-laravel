@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ExamRequests\ExamRequest;
 use Illuminate\Support\Str;
 use App\Models\Exam;
+use App\Models\ExamResult;
 use App\Models\ExamType;
 use App\Models\Question;
 use App\Models\Student;
@@ -71,7 +72,7 @@ class ExamController extends Controller
 
     public function edit(Exam $exam)
     {
-        $this->authorize('update', $exam);
+        $this->authorize('updateOrDelete', $exam);
         $teacher = Teacher::query()
             ->where('user_id', '=', auth()->user()->id)
             ->with(['subjects', 'classes'])
@@ -89,14 +90,14 @@ class ExamController extends Controller
 
     public function update(ExamRequest $request, Exam $exam)
     {
-        $this->authorize('update', $exam);
+        $this->authorize('updateOrDelete', $exam);
         $exam->update($request->validated());
         return redirect()->route("exams.index")->with('success', 'Data ujian berhasil diubah.');
     }
 
     public function destroy(Exam $exam)
     {
-        $this->authorize('delete', $exam);
+        $this->authorize('updateOrDelete', $exam);
         $exam->delete();
         return redirect()->route('exams.index')->with('success', 'Data ujian berhasil dihapus.');
     }
@@ -104,22 +105,30 @@ class ExamController extends Controller
     public function sheet(Exam $exam)
     {
         $this->authorize('sheet', $exam);
-        // cek apakah ujian sedang berlansung, jika tidak throw halaman error dengan code forbidden
-        if (strtotime($exam->start_date) > time() || strtotime($exam->end_date) < time())
+
+        if ($this->isCannotTakeTheExam($exam)) // jika tidak boleh
             abort(403, 'Ujian belum dimulai atau ujian sudah berakhir');
-        // TODO: implement cek apakah sudah mengikuti ujian
+
+        $examResult = ExamResult::query()
+            ->where('exam_id', '=', $exam->id)
+            ->where('user_id', '=', auth()->user()->id)
+            ->first();
+
+        if (!$examResult) { //jika kosong/pertama kali
+            ExamResult::create([
+                "exam_id" => $exam->id,
+                "user_id" => auth()->user()->id,
+                "score" => 0,
+                "total_right_answer" => 0
+            ]);
+        } else {
+            if ($examResult->status)  // jika sudah mengikuti
+                abort(403, 'Anda sudah mengikuti dan menyelesaikan ujian ini');
+        }
 
         $exam->load(['subject', 'class', 'teacher']);
-        // ambil siswa yang mengikuti ujian ssat ini
+        $questions = $this->getQuestionWithStudentAnswered($exam);
         $student = Student::query()->where('user_id', '=', auth()->user()->id)->first();
-        // ambil soal dengan mata pelajaran dan guru dari ujian saat ini
-        $questions = Question::query()
-            ->where('teacher_id', '=', $exam->teacher->id)
-            ->where('subject_id', '=', $exam->subject->id)
-            ->where('exam_type_id', '=', $exam->exam_type_id)
-            ->with(['studentAnswer'])
-            ->limit($exam->total_question)
-            ->get();
 
         return view('exams.sheet', [
             "pretitle" => "Ujian",
@@ -133,7 +142,8 @@ class ExamController extends Controller
     public function saveOneQuestion(Request $request, Exam $exam)
     {
         $this->authorize('sheet', $exam);
-        if (strtotime($exam->start_date) > time() || strtotime($exam->end_date) < time())
+
+        if ($this->isCannotTakeTheExam($exam)) // jika tidak boleh
             abort(403, 'Ujian belum dimulai atau ujian sudah berakhir');
 
         $idQuestion = $request->post('idQuestion');
@@ -144,6 +154,7 @@ class ExamController extends Controller
         // jika sudah update
         $studentAnswer = StudentAnswer::updateOrCreate([
             "user_id" => auth()->user()->id,
+            "exam_id" => $exam->id,
             "question_id" => $idQuestion
         ], [
             "answer" => $option
@@ -154,7 +165,52 @@ class ExamController extends Controller
 
     public function saveExam(Request $request, Exam $exam)
     {
-        // handle jika siswa selesai pada saat waktu ujian habis
-        dd($request);
+        $score = 0;
+        $totalRightAnswer = 0;
+
+        $questions = $this->getQuestionWithStudentAnswered($exam);
+        foreach ($questions as $question) {
+            if ($question->studentAnswer->answer === $question->right_option) { // jika benar
+                $totalRightAnswer += 1;
+            };
+        };
+
+        $score = ($totalRightAnswer / $questions->count())  * 100;
+
+        ExamResult::query()->where([
+            'exam_id' => $exam->id, 'user_id' => auth()->user()->id
+        ])->first()->update([
+            "score" => $score,
+            "total_right_answer" => $totalRightAnswer,
+            'status' => true
+        ]);
+
+        return redirect()->route('exams.index')->with('success', 'Anda sudah berhasil menyelesaikan ujian.');
+    }
+
+    /**
+     * Untuk mengecek apakah tidak boleh mengikuti ujian 
+     * atau
+     * (belum waktu ujian dimulai atau waktu ujian sudah berakhir)
+     * atau
+     * (cek apakah ujian sedang berlangsung)
+     */
+    private function isCannotTakeTheExam($exam)
+    {
+        return strtotime($exam->start_date) > time() || strtotime($exam->end_date) < time();
+    }
+
+    private function getQuestionWithStudentAnswered(Exam $exam)
+    {
+        // ambil soal dengan mata pelajaran dan guru dari ujian saat ini dan juga dengan jawaban siswa dari yang saat ini sedang login
+        return Question::query()
+            ->where('teacher_id', '=', $exam->teacher->id)
+            ->where('subject_id', '=', $exam->subject->id)
+            ->where('exam_type_id', '=', $exam->exam_type_id)
+            ->with(['studentAnswer' =>  function ($query) {
+                $query->where('user_id', '=', auth()->user()->id);
+            }])
+            ->limit($exam->total_question)
+            ->get();
     }
 }

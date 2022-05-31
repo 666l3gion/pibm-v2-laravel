@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('student_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // user_id === student_id (untuk menghindari query yang terlalu banyak)
             $table->foreignId('question_id')->constrained()->cascadeOnDelete();
             $table->enum('answer', ['a', 'b', 'c', 'd', 'e'])->nullable();
             $table->timestamps();

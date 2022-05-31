@@ -9,7 +9,7 @@
 
         @include('partials.alert')
 
-        <form class="card card-md" action="{{ route('login') }}" method="post">
+        <form class="card card-md form-disable" action="{{ route('login') }}" method="post">
             @csrf
 
             <div class="card-body">

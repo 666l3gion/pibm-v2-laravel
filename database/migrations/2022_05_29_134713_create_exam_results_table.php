@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('exam_results', function (Blueprint $table) {
             $table->id();
             $table->foreignId('exam_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // user_id sama saja dengan student_id, user_id digunakan agar tidak terjadi query yang berlebihan
             $table->integer('score');
             $table->integer('total_right_answer');
             $table->boolean('status')->default(false); // false == belum selesai ujian, true === sebaliknya

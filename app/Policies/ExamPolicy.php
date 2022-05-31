@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Exam;
+use App\Models\ExamResult;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
@@ -31,24 +32,34 @@ class ExamPolicy
     {
         $student = Student::query()->where('user_id', '=', $user->id)->with(['classes'])->first();
         // cek apakah yang mengkases detail adalah siswa dan siswa tersebut berelasi ke kelas dari ujian ini
-        return $user->isStudent() && $student->classes->contains('id', $exam->class_id);
+        $examResult = ExamResult::query()->where([
+            "user_id" => $user->id,
+            "exam_id" => $exam->id
+        ])->first();
+        $isUserOrStudentTakeAndFinishTheExam = $examResult ? $examResult->status : false;
+        return $user->isStudent() && $student->classes->contains('id', $exam->class_id) && !$isUserOrStudentTakeAndFinishTheExam; // !$isUserOrStudentTakeAndFinishTheExam === belum menyelesaikan ujian
     }
 
-    public function update(User $user, Exam $exam)
+    // kenapa diberi nama updateOrDelete, karena isi dari update dan delete sama saja
+    // jadi untuk peformance pada saat mengunakan @can di loop exams/index.blade.php tidak query dua kali
+    public function updateOrDelete(User $user, Exam $exam)
     {
         $teacher = Teacher::find($exam->teacher_id);
         return $user->isTeacher() && $user->id == $teacher->user_id;
     }
 
-    public function delete(User $user, Exam $exam)
-    {
-        $teacher = Teacher::find($exam->teacher_id);
-        return $user->isTeacher() && $user->id == $teacher->user_id;
-    }
+    // public function delete(User $user, Exam $exam)
+    // {
+    //     $teacher = Teacher::find($exam->teacher_id);
+    //     return $user->isTeacher() && $user->id == $teacher->user_id;
+    // }
 
     public function sheet(User $user, Exam $exam)
     {
-        $student = Student::query()->where('user_id', '=', $user->id)->with(['classes'])->first();
+        $student = Student::query()
+            ->where('user_id', '=', auth()->user()->id)
+            ->with(['classes'])
+            ->first();
         // cek apakah yang mengkases detail adalah siswa dan siswa tersebut berelasi ke kelas dari ujian ini
         return $user->isStudent()
             && $student->classes->contains('id', $exam->class_id);
