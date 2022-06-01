@@ -147,9 +147,6 @@ class ExamController extends Controller
     {
         $this->authorize('sheet', $exam);
 
-        if ($this->isCannotTakeTheExam($exam)) // jika tidak boleh
-            abort(403, 'Ujian belum dimulai atau ujian sudah berakhir');
-
         $idQuestion = $request->post('idQuestion');
         $option = $request->post('option');
 
