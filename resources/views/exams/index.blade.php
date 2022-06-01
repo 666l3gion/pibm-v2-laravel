@@ -166,7 +166,7 @@
                                             </a>
                                             @else {{-- sudah menyelesaikan ujian --}}
                                             <a class="dropdown-item"
-                                                href="{{ route('exams.show', ['exam' => $exam->id]) }}">
+                                                href="{{ route('exams.result', ['exam' => $exam->id]) }}">
                                                 Lihat Hasil
                                             </a>
                                             @endcan

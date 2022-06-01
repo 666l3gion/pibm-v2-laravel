@@ -64,4 +64,15 @@ class ExamPolicy
         return $user->isStudent()
             && $student->classes->contains('id', $exam->class_id);
     }
+
+    /**
+     * Hampir sama seperti view, hanya yang beda tidak ada ! $isUserOrStudentTakeAndFinishTheExam
+     */
+    public function result(User $user, Exam $exam, ExamResult $examResult)
+    {
+        $student = Student::query()->where('user_id', '=', $user->id)->with(['classes'])->first();
+        // cek apakah yang mengkases detail adalah siswa dan siswa tersebut berelasi ke kelas dari ujian ini
+        $isUserOrStudentTakeAndFinishTheExam = $examResult ? $examResult->status : false;
+        return $user->isStudent() && $student->classes->contains('id', $exam->class_id) && $isUserOrStudentTakeAndFinishTheExam; // $isUserOrStudentTakeAndFinishTheExam === sudah menyelesaikan ujian
+    }
 }

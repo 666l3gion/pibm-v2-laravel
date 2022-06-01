@@ -217,4 +217,28 @@ class ExamController extends Controller
             ->limit($exam->total_question)
             ->get();
     }
+
+    /**
+     * Halaman untuk melihat hasil ujian
+     */
+    public function result(Exam $exam)
+    {
+        $examResult = ExamResult::query()->where([
+            "user_id" => auth()->user()->id,
+            "exam_id" => $exam->id
+        ])->first();
+
+        $this->authorize('result', [$exam, $examResult]);
+
+        $exam->load(['subject', 'class', 'teacher']);
+        $student = Student::query()->where('user_id', '=', auth()->user()->id)->first();
+
+        return view('exams.result', [
+            "pretitle" => "Hasil Ujian",
+            "title" => "Detail Data Hasil Ujian",
+            "exam" => $exam,
+            'student' => $student,
+            "examResult" => $examResult
+        ]);
+    }
 }
