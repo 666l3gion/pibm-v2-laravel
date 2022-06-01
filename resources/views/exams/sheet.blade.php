@@ -38,8 +38,9 @@
                                 {{ $exam->total_question }}
                             </div>
                             <div class="py-2">
-                                <span class="fw-bold d-block">Sisa Waktu</span>
-                                <span class="badge bg-success">43 Menit Lagi</span>
+                                <span class="fw-bold d-block mb-1">Sisa Waktu</span>
+                                <span class="badge bg-success" id="timeleft-of-exam"
+                                    data-end-time-exam="{{ $examResult->end_time }}"></span>
                             </div>
                         </div>
                     </div>
@@ -74,7 +75,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('exams.save-exam', $exam->id) }}" method="post"
+            <form action="{{ route('exams.save-exam', $exam->id) }}" method="post" id="form-save-exam"
                 onsubmit="return confirm('Apakah anda yakin ingin mengakhiri ujian ini?')" data-bs-spy="scroll"
                 data-bs-target="#question-nav-menu" data-bs-offset="0" tabindex="0">
                 @csrf

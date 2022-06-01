@@ -26,15 +26,19 @@ class QuestionPolicy
         return $user->isTeacher();
     }
 
-    public function update(User $user, Question $question)
+    /**
+     * updateOrDelete agar mengurangi query pada saat memanggil @can di index.blade.php
+     * karena isi dari update dan delete sama saja
+     */
+    public function updateOrDelete(User $user, Question $question)
     {
         $teacher = Teacher::find($question->teacher_id);
         return $user->isTeacher() && $user->id == $teacher->user_id;
     }
 
-    public function delete(User $user, Question $question)
-    {
-        $teacher = Teacher::find($question->teacher_id);
-        return $user->isTeacher() && $user->id == $teacher->user_id;
-    }
+    // public function delete(User $user, Question $question)
+    // {
+    //     $teacher = Teacher::find($question->teacher_id);
+    //     return $user->isTeacher() && $user->id == $teacher->user_id;
+    // }
 }

@@ -11,6 +11,7 @@ use App\Models\Question;
 use App\Models\Student;
 use App\Models\StudentAnswer;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -115,11 +116,13 @@ class ExamController extends Controller
             ->first();
 
         if (!$examResult) { //jika kosong/pertama kali
-            ExamResult::create([
+            $examResult = ExamResult::create([
                 "exam_id" => $exam->id,
                 "user_id" => auth()->user()->id,
                 "score" => 0,
-                "total_right_answer" => 0
+                "total_right_answer" => 0,
+                "start_time" => Carbon::now(),
+                "end_time" => Carbon::now()->addMinutes($exam->time)
             ]);
         } else {
             if ($examResult->status)  // jika sudah mengikuti
@@ -135,7 +138,8 @@ class ExamController extends Controller
             "title" => "Lembar Ujian",
             "exam" => $exam,
             'student' => $student,
-            'questions' => $questions
+            'questions' => $questions,
+            "examResult" => $examResult
         ]);
     }
 
@@ -207,8 +211,11 @@ class ExamController extends Controller
             ->where('teacher_id', '=', $exam->teacher->id)
             ->where('subject_id', '=', $exam->subject->id)
             ->where('exam_type_id', '=', $exam->exam_type_id)
-            ->with(['studentAnswer' =>  function ($query) {
-                $query->where('user_id', '=', auth()->user()->id);
+            ->with(['studentAnswer' =>  function ($query) use ($exam) {
+                $query->where([
+                    'user_id' => auth()->user()->id,
+                    'exam_id' => $exam->id,
+                ]);
             }])
             ->limit($exam->total_question)
             ->get();

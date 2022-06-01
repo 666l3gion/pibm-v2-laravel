@@ -93,7 +93,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        $this->authorize('update', $question);
+        $this->authorize('updateOrDelete', $question);
         $teacher = Teacher::query()->where('user_id', '=', auth()->user()->id)->with('subjects')->first();
         $examTypes = ExamType::all();
 
@@ -115,7 +115,7 @@ class QuestionController extends Controller
      */
     public function update(QuestionRequest $request, Question $question)
     {
-        $this->authorize('update', $question);
+        $this->authorize('updateOrDelete', $question);
         $validatedData = $request->validated();
         if ($request->file('image')) {
             if ($request->post('old-image')) Storage::delete($request->post('old-image'));
@@ -133,7 +133,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        $this->authorize('delete', $question);
+        $this->authorize('updateOrDelete', $question);
         $question->delete();
         return redirect()->route('questions.index')->with('success', 'Data soal berhasil dihapus.');
     }

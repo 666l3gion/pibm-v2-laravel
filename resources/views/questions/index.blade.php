@@ -97,7 +97,15 @@
                                         <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport"
                                             data-bs-toggle="dropdown">Aksi</button>
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            @can('delete', $question)
+                                            <a class="dropdown-item"
+                                                href="{{ route('questions.show', ['question' => $question->id]) }}">
+                                                Detail
+                                            </a>
+                                            @can('updateOrDelete', $question)
+                                            <a class="dropdown-item"
+                                                href="{{ route('questions.edit', ['question' => $question->id]) }}">
+                                                Edit
+                                            </a>
                                             <form
                                                 action="{{ route('questions.destroy', ['question' => $question->id]) }}"
                                                 method="post">
@@ -109,16 +117,6 @@
                                                     Hapus
                                                 </button>
                                             </form>
-                                            @endcan
-                                            <a class="dropdown-item"
-                                                href="{{ route('questions.show', ['question' => $question->id]) }}">
-                                                Detail
-                                            </a>
-                                            @can('update', $question)
-                                            <a class="dropdown-item"
-                                                href="{{ route('questions.edit', ['question' => $question->id]) }}">
-                                                Edit
-                                            </a>
                                             @endcan
                                         </div>
                                     </span>
