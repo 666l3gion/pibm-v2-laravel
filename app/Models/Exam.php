@@ -39,4 +39,9 @@ class Exam extends Model
     {
         return $this->belongsTo(Clazss::class);
     }
+
+    public function examResults()
+    {
+        return $this->hasMany(ExamResult::class);
+    }
 }

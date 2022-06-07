@@ -91,7 +91,6 @@
                         <thead>
                             <tr>
                                 <th class="w-1">No.</th>
-                                <th>Guru</th>
                                 <th>Mata Pelajaran</th>
                                 <th>Kelas</th>
                                 <th>Nama Ujian</th>
@@ -111,9 +110,6 @@
                                 <td><span class="text-muted">{{ ($exams->currentpage()-1) * $exams->perpage() +
                                         $loop->index + 1 }}</span></td>
                                 <td>
-                                    {{ $exam->teacher->name }}
-                                </td>
-                                <td>
                                     {{ $exam->subject->name }}
                                 </td>
                                 <td>
@@ -126,7 +122,8 @@
                                     {{ $exam->total_question }}
                                 </td>
                                 <td>
-                                    {{ $exam->start_date }} - {{ $exam->end_date }}
+                                    <div class="d-block">{{ $exam->start_date }} <span class="text-muted">/</span></div>
+                                    <div class="d-block">{{ $exam->end_date }}</div>
                                 </td>
                                 <td>
                                     {{ $exam->time }} Menit
@@ -164,11 +161,18 @@
                                                 href="{{ route('exams.show', ['exam' => $exam->id]) }}">
                                                 Ikuti Ujian
                                             </a>
-                                            @else {{-- sudah menyelesaikan ujian --}}
+                                            @else {{-- sudah menyelesaikan ujian / user yang login guru --}}
+                                            @if(auth()->user()->isStudent())
                                             <a class="dropdown-item"
                                                 href="{{ route('exams.result', ['exam' => $exam->id]) }}">
                                                 Lihat Hasil
                                             </a>
+                                            @else
+                                            <a class="dropdown-item"
+                                                href="{{ route('exam-results.index', ['exam' => $exam->id]) }}">
+                                                Hasil Ujian
+                                            </a>
+                                            @endif
                                             @endcan
                                         </div>
                                     </span>

@@ -6,6 +6,7 @@ use App\Http\Controllers\ClassStudentController;
 use App\Http\Controllers\ClassTeacherController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamResultController;
 use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MajorSubjectController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Models\ClassTeacher;
 use App\Models\Clazss;
+use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Student;
 use App\Models\Subject;
@@ -71,6 +73,11 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['role:guru,siswa'])->group(function () {
         Route::resource('/exams', ExamController::class);
+    });
+
+    Route::middleware(['role:guru'])->group(function () {
+        Route::get('/exams/{exam}/results', [ExamResultController::class, 'index'])
+            ->name('exam-results.index');
     });
 
     Route::middleware(['role:siswa'])->group(function () {

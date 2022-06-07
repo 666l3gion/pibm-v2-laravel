@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -97,7 +98,7 @@ class User extends Authenticatable
         return $this->role === self::$GURU_ROLE;
     }
 
-    public function isStudent()
+    public function isStudent(): bool
     {
         // return $this->role()->name === 'siswa';
         return $this->role === self::$SISWA_ROLE;
